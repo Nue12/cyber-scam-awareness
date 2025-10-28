@@ -11,6 +11,7 @@ import type { Route } from "./+types/root";
 import "./app.css";
 import { AppProvider } from "./context/AppContext";
 import Navbar from "./components/NavBar";
+import NotFound from "./components/NotFound";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -53,8 +54,18 @@ export default function App() {
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  let message = "Oops!";
-  let details = "An unexpected error occurred.";
+  // If this is a route response and it's a 404, show the friendly NotFound page immediately
+  if (isRouteErrorResponse(error) && error.status === 404) {
+    return <NotFound />;
+  }
+
+  // Defaults
+  const defaultMessage = "Oops!";
+  const defaultDetails = "An unexpected error occurred.";
+
+  // Compute message and details concisely
+  let message = defaultMessage;
+  let details = defaultDetails;
   let stack: string | undefined;
 
   if (isRouteErrorResponse(error)) {
@@ -62,8 +73,9 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
     details =
       error.status === 404
         ? "The requested page could not be found."
-        : error.statusText || details;
+        : error.statusText || defaultDetails;
   } else if (import.meta.env.DEV && error && error instanceof Error) {
+    // In dev show error details and stack for debugging
     details = error.message;
     stack = error.stack;
   }
