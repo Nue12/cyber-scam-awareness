@@ -1,6 +1,7 @@
 import type { Route } from "./+types/home";
 import { Link } from "react-router";
 import { useApp } from "../context/AppContext";
+import { netlifyRouterContext } from "@netlify/vite-plugin-react-router";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -8,6 +9,18 @@ export function meta({}: Route.MetaArgs) {
     { name: "description", content: "Welcome to React Router!" },
   ];
 }
+
+const logMiddleware: Route.MiddlewareFunction = async ({
+  request,
+  context,
+}) => {
+  const country = context.geo?.country?.name ?? "unknown";
+  console.log(
+    `Handling ${request.method} request to ${request.url} from ${country}`
+  );
+};
+
+export const middleware: Route.MiddlewareFunction[] = [logMiddleware];
 
 export default function Home() {
   const { preTestScore, postTestScore } = useApp();
