@@ -903,15 +903,16 @@ export default function Learn() {
               )}
 
               {/* Navigation Buttons */}
-              <div className="flex justify-between mt-8 pt-6 border-t">
-                <Link to="/pre-test">
-                  <button className="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition font-medium">
-                    ← Take Pre-Test
+              <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-3 mt-8 pt-6 border-t">
+                <Link to="/pre-test" className="w-full sm:w-auto">
+                  <button className="w-full sm:w-auto px-4 sm:px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition font-medium text-center">
+                    Take Pre-Test
                   </button>
                 </Link>
-                <Link to="/quiz">
-                  <button className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium">
-                    Try Interactive Quiz →
+
+                <Link to="/quiz" className="w-full sm:w-auto">
+                  <button className="w-full sm:w-auto px-4 sm:px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium text-center">
+                    Try Interactive Quiz
                   </button>
                 </Link>
               </div>
