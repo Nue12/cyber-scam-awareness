@@ -120,9 +120,17 @@ export default function Home() {
                 </div>
               </div>
               {postTestScore !== null ? (
-                <span className="text-green-600 font-semibold">
-                  ✓ Completed
-                </span>
+                <span className="text-green-600 font-semibold">✓ Completed</span>
+              ) : preTestScore === null ? (
+                // Pre-test not completed: show disabled CTA with hint
+                <div title="Complete the Pre-Test first" className="flex items-center">
+                  <button
+                    disabled
+                    className="bg-gray-200 text-gray-500 px-6 py-2 rounded-lg cursor-not-allowed"
+                  >
+                    Start
+                  </button>
+                </div>
               ) : (
                 <Link to="/post-test">
                   <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
