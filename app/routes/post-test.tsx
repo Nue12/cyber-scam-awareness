@@ -7,7 +7,8 @@ import Question from "../components/Question";
 
 export default function PostTest() {
   const navigate = useNavigate();
-  const { setPostTestScore, setPostTestAnswers } = useApp();
+  // Require pre-test to be completed before taking post-test
+  const { setPostTestScore, setPostTestAnswers, preTestScore } = useApp();
 
   const [questions, setQuestions] = useState<QuestionType[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -16,8 +17,14 @@ export default function PostTest() {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
+    // If the user hasn't completed the pre-test, send them back to the pre-test page
+    if (preTestScore === null) {
+      navigate("/pre-test");
+      return;
+    }
+
     loadQuestions();
-  }, []);
+  }, [preTestScore, navigate]);
 
   const loadQuestions = async () => {
     try {
